@@ -1,10 +1,11 @@
 {
-  "name": "cookies-utility",
+  "name": "@lephenix47/cookies-utility",
   "version": "1.0.0",
   "description": "Manage browser cookies in a simple manner",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "publish": "publish --access=public"
   },
   "repository": {
     "type": "git",
