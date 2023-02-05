@@ -1,0 +1,24 @@
+{
+  "name": "cookies-utility",
+  "version": "1.0.0",
+  "description": "Manage browser cookies in a simple manner",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LePhenix47/Cookie-utility_npm-package.git"
+  },
+  "keywords": [
+    "cookie",
+    "cookies",
+    "webstorage"
+  ],
+  "author": "Younes Lahouiti",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LePhenix47/Cookie-utility_npm-package/issues"
+  },
+  "homepage": "https://github.com/LePhenix47/Cookie-utility_npm-package#readme"
+}
