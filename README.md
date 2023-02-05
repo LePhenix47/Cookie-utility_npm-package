@@ -1,1 +1,3 @@
-# Cookie-utility_npm-package
+# Cookie utility package
+
+A simpler way to manage cookies
