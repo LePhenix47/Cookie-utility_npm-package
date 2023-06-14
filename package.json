@@ -2,9 +2,12 @@
   "name": "@lephenix47/cookies-utility",
   "version": "1.0.1",
   "description": "Manage browser cookies in a simple manner",
-  "main": "index.js",
+  "main": "lib/es6/index.js",
+  "module": "lib/commonjs/index.js",
+  "types": "lib/es6/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "ts-cmd": "rmdir /s /q  lib && tsc && tsc --build tsconfig.es5.json",
+    "ts-bash": "rm -rf ./ lib && tsc && tsc --build tsconfig.es5.json",
     "publish": "npm publish --access=public"
   },
   "repository": {
@@ -21,5 +24,9 @@
   "bugs": {
     "url": "https://github.com/LePhenix47/Cookie-utility_npm-package/issues"
   },
-  "homepage": "https://github.com/LePhenix47/Cookie-utility_npm-package#readme"
+  "homepage": "https://github.com/LePhenix47/Cookie-utility_npm-package#readme",
+  "devDependencies": {
+    "ts-loader": "^9.4.3",
+    "typescript": "^5.1.3"
+  }
 }
