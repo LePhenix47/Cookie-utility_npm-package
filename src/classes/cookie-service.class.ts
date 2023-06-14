@@ -32,11 +32,11 @@ export class CookieService {
   ): string {
     if (cookieCanExpire) {
       //Gets the time in ms from the next week
-      let todayInMilliseconds: number = new Date().getTime();
-      let sevenDaysInMilliseconds: number = 1000 * 60 * 60 * 24 * 7;
+      const todayInMilliseconds: number = new Date().getTime();
+      const sevenDaysInMilliseconds: number = 1000 * 60 * 60 * 24 * 7;
 
       //Gets the actual date
-      let nextWeekDate: Date = new Date(
+      const nextWeekDate: Date = new Date(
         todayInMilliseconds + sevenDaysInMilliseconds
       );
       return (document.cookie = `${name}=${value}; expires="${nextWeekDate}"; sameSite=strict"`);
