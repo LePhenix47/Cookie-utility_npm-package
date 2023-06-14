@@ -1,1 +1,1 @@
-import {} from "../lib/commonjs/index";
+import {} from "../lib/index";
