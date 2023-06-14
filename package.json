@@ -2,8 +2,8 @@
   "name": "@lephenix47/cookies-utility",
   "version": "1.0.1",
   "description": "Manage browser cookies in a simple manner",
-  "main": "lib/es6/index.js",
-  "types": "lib/es6/index.d.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "ts-cmd": "rmdir /s /q  lib && tsc && tsc --build",
     "ts-bash": "rm -rf ./ lib && tsc && tsc --build",
