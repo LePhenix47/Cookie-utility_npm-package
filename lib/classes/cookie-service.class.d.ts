@@ -14,7 +14,7 @@ import { CookieType } from "../variables/cookie-types.variables";
   * console.log(document.cookie) //Returns "test1=a;test2=b"
  * ```
  */
-export declare class CookieService {
+declare class CookieService {
     /**
      *
      * @param {any} name Name of the cookie
@@ -32,7 +32,7 @@ export declare class CookieService {
      * @returns {null | { name:string, value:any }} Null or an object with the the name and the value of cookie
      * @static
      */
-    static getCookieByName(cookieNameToFind: string): null | CookieType;
+    static getCookieByName(cookieNameToFind: string, parseCookies?: boolean): null | CookieType;
     /**
      * Changes the value of a cookie by its name
      *
@@ -58,7 +58,7 @@ export declare class CookieService {
      * @returns {string | {name:string, value:any}} Either a string or an array of objects containing the cookies
      * @static
      */
-    static getAllCookies(rawCookies?: boolean): string | CookieType[];
+    static getAllCookies(rawCookies?: boolean, parseCookies?: boolean): string | CookieType[];
     /**
      * Deletes all cookies stored in the website
      *
@@ -66,4 +66,12 @@ export declare class CookieService {
      * @static
      */
     static deleteAllCookies(): void;
+    /**
+     * Verifies whether a given JSON string can be parsed.
+     *
+     * @param value - The JSON string to evaluate.
+     * @returns {boolean} True if parsing succeeds, otherwise False.
+     */
+    private static isParseable;
 }
+export default CookieService;

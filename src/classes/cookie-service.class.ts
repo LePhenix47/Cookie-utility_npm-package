@@ -15,7 +15,7 @@ import { CookieType } from "../variables/cookie-types.variables";
   * console.log(document.cookie) //Returns "test1=a;test2=b"
  * ```
  */
-export class CookieService {
+class CookieService {
   /**
    *
    * @param {any} name Name of the cookie
@@ -33,7 +33,7 @@ export class CookieService {
     if (cookieCanExpire) {
       //Gets the time in ms from the next week
       const todayInMilliseconds: number = new Date().getTime();
-      const sevenDaysInMilliseconds: number = 1000 * 60 * 60 * 24 * 7;
+      const sevenDaysInMilliseconds: number = 604_800_000;
 
       //Gets the actual date
       const nextWeekDate: Date = new Date(
@@ -52,9 +52,15 @@ export class CookieService {
    * @returns {null | { name:string, value:any }} Null or an object with the the name and the value of cookie
    * @static
    */
-  static getCookieByName(cookieNameToFind: string): null | CookieType {
+  static getCookieByName(
+    cookieNameToFind: string,
+    parseCookies: boolean = false
+  ): null | CookieType {
     //We get all the cookies
-    const cookiesArray = this.getAllCookies(false) as CookieType[];
+    const cookiesArray = this.getAllCookies(
+      false,
+      parseCookies
+    ) as CookieType[];
 
     //We iterate through the array of cookies and find the cookie wanted
     for (const cookieObject of cookiesArray) {
@@ -101,18 +107,24 @@ export class CookieService {
    * @returns {string | {name:string, value:any}} Either a string or an array of objects containing the cookies
    * @static
    */
-  static getAllCookies(rawCookies: boolean = false): string | CookieType[] {
+  static getAllCookies(
+    rawCookies: boolean = false,
+    parseCookies: boolean = false
+  ): string | CookieType[] {
     if (rawCookies) {
       return document.cookie;
     }
 
-    let rawArrayOfCookies: string[] = document.cookie.split(";");
+    const rawArrayOfCookies: string[] = document.cookie.split("; ");
     const formattedArrayOfCookies: CookieType[] = [];
 
     for (const cookie of rawArrayOfCookies) {
-      let name: string = cookie.split("=")[0];
-      let value: any = cookie.split("=")[1];
-      value = JSON.parse(value);
+      let [name, value] = cookie.split("=") as [string, any];
+
+      value = decodeURIComponent(value);
+
+      value =
+        parseCookies && this.isParseable(value) ? JSON.parse(value) : value;
 
       formattedArrayOfCookies.push({ name, value });
     }
@@ -135,4 +147,22 @@ export class CookieService {
       document.cookie = `${name}=0; expires=${new Date(0)}`;
     }
   }
+
+  /**
+   * Verifies whether a given JSON string can be parsed.
+   *
+   * @param value - The JSON string to evaluate.
+   * @returns {boolean} True if parsing succeeds, otherwise False.
+   */
+  private static isParseable(value: any): boolean {
+    try {
+      JSON.parse(value);
+
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
 }
+
+export default CookieService;
