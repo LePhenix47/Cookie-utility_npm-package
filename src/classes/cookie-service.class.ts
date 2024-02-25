@@ -46,10 +46,12 @@ class CookieService {
   }
 
   /**
-   * Retrieves a cookie by its name
+   * Retrieves a cookie by its name.
+   * If the optional `parseCookies` parameter is set to `true`, then the returned value will be parsed into a JavaScript object. Otherwise, it returns an object with the `name` and `value` properties.
    *
-   * @param {string} cookieNameToFind Name of the cookie
-   * @returns {null | { name:string, value:any }} Null or an object with the the name and the value of cookie
+   * @param cookieNameToFind - The name of the cookie to retrieve.
+   * @param parseCookies - Optional flag indicating whether to parse the cookie value into a JavaScript object. Default is `false`.
+   * @returns An object representing the requested cookie, or `null` if no such cookie exists.
    * @static
    */
   static getCookieByName(
@@ -100,12 +102,11 @@ class CookieService {
   }
 
   /**
-   * Gets all cookies stored in the website
-   * Returns either a string or an array of objects with the cookie name and value
+   * Retrieves all cookies stored in the current website. By default, the function returns an array of objects representing the cookies. However, if the `rawCookies` parameter is set to `true`, then the function instead returns a single string containing all the cookies.
    *
-   * @param {boolean} rawCookies Boolean to know if the cookies retrieved need to be in a string
-   * @returns {string | {name:string, value:any}} Either a string or an array of objects containing the cookies
-   * @static
+   * @param rawCookies - Optional flag indicating whether to return the cookies in their original string format. Default is `false`.
+   * @param parseCookies - Optional flag indicating whether to parse the cookie values into JavaScript objects. Ignored when `rawCookies` is `true`. Default is `false`.
+   * @returns A string or an array of objects representing the cookies.
    */
   static getAllCookies(
     rawCookies: boolean = false,

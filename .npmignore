@@ -27,3 +27,7 @@ webpack.config.js
 test/
 examples/
 demo/
+
+# Must include files
+!lib/**/*.d.ts
+!lib/**/*.js
