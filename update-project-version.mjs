@@ -13,34 +13,44 @@ function updateVersion(type) {
   const packageJsonPath = "./package.json";
   const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf8"));
 
+  const currentVersion = packageJson.version;
+
   // Get current version
-  let [major, minor, patch] = packageJson.version.split(".").map(Number);
+  let [major, minor, patch] = currentVersion.split(".").map(Number);
 
   // Update version based on the type
   switch (type) {
-    case "patch":
+    case "patch": {
       patch++;
       break;
-    case "minor":
+    }
+    case "minor": {
       minor++;
       patch = 0; // Reset patch version for a minor update
       break;
-    case "major":
+    }
+    case "major": {
       major++;
       minor = 0; // Reset minor and patch versions for a major update
       patch = 0;
       break;
-    default:
+    }
+    default: {
       throw new Error(
-        'Invalid version type. Use "patch", "minor", or "major".'
+        '❎ Invalid version type. Use "patch", "minor", or "major".'
       );
+    }
   }
 
   // Update package.json with the new version
   packageJson.version = `${major}.${minor}.${patch}`;
   fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
 
-  console.log(`Version updated to ${packageJson.version}`);
+  const newVersion = packageJson.version;
+
+  console.log(
+    `✅ Successfully updated version: ${currentVersion} → ${newVersion}`
+  );
 }
 
 /**
@@ -58,7 +68,7 @@ function startScript() {
     "Which version do you want to update (patch/minor/major)? ",
     async (answer) => {
       try {
-        await updateVersion(answer.trim());
+        updateVersion(answer.trim());
       } catch (error) {
         console.error(error.message);
       }

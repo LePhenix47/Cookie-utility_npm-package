@@ -4,6 +4,7 @@
   "description": "Manage browser cookies in a simple manner",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "type": "module",
   "exports": {
     ".": "./lib/index.js",
     "./lib": "./lib/index.js",
@@ -21,7 +22,7 @@
     "ts-cmd": "rmdir /s /q  lib && tsc && tsc --build",
     "ts-bash": "rm -rf ./ lib && tsc && tsc --build",
     "publish": "npm publish --access=public",
-    "update-version": "node update-project-version && git add . && git commit -m 'Update on the project version' && git push",
+    "update-version": "node update-project-version.mjs && git add . && git commit -m \"Update on the project version\" && git push",
     "git:push": "git push && npm run update-version && npm run publish"
   },
   "repository": {
