@@ -21,7 +21,8 @@
     "ts-cmd": "rmdir /s /q  lib && tsc && tsc --build",
     "ts-bash": "rm -rf ./ lib && tsc && tsc --build",
     "publish": "npm publish --access=public",
-    "git:push": "git push && npm run publish"
+    "update-version": "node update-project-version && git add . && git commit -m 'Update on the project version' && git push",
+    "git:push": "git push && npm run update-version && npm run publish"
   },
   "repository": {
     "type": "git",
