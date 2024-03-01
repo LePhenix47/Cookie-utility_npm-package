@@ -30,6 +30,8 @@ class CookieService {
     value: any,
     cookieCanExpire: boolean = false
   ): string {
+    this.isWindowObjectAvailable();
+
     if (cookieCanExpire) {
       //Gets the time in ms from the next week
       const todayInMilliseconds: number = new Date().getTime();
@@ -58,6 +60,8 @@ class CookieService {
     cookieNameToFind: string,
     parseCookies: boolean = false
   ): null | CookieType {
+    this.isWindowObjectAvailable();
+
     //We get all the cookies
     const cookiesArray = this.getAllCookies(
       false,
@@ -87,6 +91,8 @@ class CookieService {
    * @static
    */
   static patchCookieValue(nameOfCookie: string, newValue: any): void {
+    this.isWindowObjectAvailable();
+
     document.cookie = `${nameOfCookie}=${newValue}`;
   }
 
@@ -98,6 +104,8 @@ class CookieService {
    * @static
    */
   static deleteCookieByName(nameOfCookie: string): void {
+    this.isWindowObjectAvailable();
+
     document.cookie = `${nameOfCookie}=0; expires=${new Date(0)}`;
   }
 
@@ -112,6 +120,8 @@ class CookieService {
     rawCookies: boolean = false,
     parseCookies: boolean = false
   ): string | CookieType[] {
+    this.isWindowObjectAvailable();
+
     if (rawCookies) {
       return document.cookie;
     }
@@ -140,6 +150,8 @@ class CookieService {
    * @static
    */
   static deleteAllCookies(): void {
+    this.isWindowObjectAvailable();
+
     let rawArrayOfCookies: string[] = document.cookie.split(";");
 
     for (const cookie of rawArrayOfCookies) {
@@ -162,6 +174,15 @@ class CookieService {
       return true;
     } catch (error) {
       return false;
+    }
+  }
+
+  private static isWindowObjectAvailable(): null | void {
+    const windowObjectIsUnavailable: boolean = typeof window === "undefined";
+    if (windowObjectIsUnavailable) {
+      console.warn("window object is unavailable");
+
+      return null;
     }
   }
 }
