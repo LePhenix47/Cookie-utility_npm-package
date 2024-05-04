@@ -1,50 +1,78 @@
-import { CookieType } from "../variables/cookie-types.variables";
+import { CookieOptions, CookieType } from "../variables/cookie-types.variables";
 
 /**
- * Utility class that handles cookies
+ * Utility class for managing cookies.
  *
- * **PS:** Cookie value aren't overridden
+ * @class
  *
- * @example
- *
- * ```js
-  * document.cookie = "test1 = a";
-  
-  * document.cookie = "test2 = b";
-  *
-  * console.log(document.cookie) //Returns "test1=a;test2=b"
- * ```
+ * @author
+ *  [Younes LAHOUITI](https://github.com/LePhenix47)
  */
 class CookieService {
   /**
+   * Sets a cookie with the specified name, value, and options.
    *
-   * @param {any} name Name of the cookie
-   * @param {any} value Value of the cookie
-   * @param {boolean} cookieCanExpire Boolean to know if the cookie can expire
-   * @returns {string} Cookie-string that was created
+   * @param {any} name - The name of the cookie.
+   * @param {any} value - The value of the cookie.
+   * @param {CookieOptions} options - The options for the cookie (optional).
+   * @returns The string representation of the cookie.
    *
-   * @static
+   * @example
+   * // Example usage:
+   *CookieService.setCookie("myCookie", "myValue", {
+   *  expires: new Date(new Date() + 7 * 24 * 60 * 60 * 1_000), // Expires in 7 days
+   *  domain: ".example.com",
+   *  path: "/",
+   *  secure: true,
+   *  httpOnly: true,
+   *  sameSite: "Strict",
+   *});
    */
-  static setCookie(
-    name: any,
-    value: any,
-    cookieCanExpire: boolean = false
-  ): string {
+  static setCookie(name: any, value: any, options: CookieOptions): string {
     this.isWindowObjectAvailable();
 
-    if (cookieCanExpire) {
-      //Gets the time in ms from the next week
-      const todayInMilliseconds: number = new Date().getTime();
-      const sevenDaysInMilliseconds: number = 604_800_000;
+    // * Construct the cookie string with name and value
+    let cookieString: string = `${name}=${value}`;
 
-      //Gets the actual date
-      const nextWeekDate: Date = new Date(
-        todayInMilliseconds + sevenDaysInMilliseconds
-      );
-      return (document.cookie = `${name}=${value}; expires="${nextWeekDate}"; sameSite=strict"`);
+    // * Add optional parameters if provided
+    if (!options) {
+      return (document.cookie = cookieString);
     }
 
-    return (document.cookie = `${name}=${value}; sameSite=strict`);
+    const { expires, domain, path, secure, httpOnly, sameSite } = options;
+    // * Expiry date
+    if (expires) {
+      const expiresAtDate: Date = new Date(expires);
+      cookieString += `; expires=${expiresAtDate.toUTCString()}`;
+    }
+
+    // * Domain
+    if (domain) {
+      cookieString += `; domain=${domain}`;
+    }
+
+    // * Path
+    if (path) {
+      cookieString += `; path=${path}`;
+    }
+
+    // * Secure flag
+    if (secure) {
+      cookieString += `; secure`;
+    }
+
+    // * HTTPOnly flag
+    if (httpOnly) {
+      cookieString += `; HttpOnly`;
+    }
+
+    // * SameSite attribute
+    if (sameSite) {
+      cookieString += `; SameSite=${sameSite}`;
+    }
+
+    // * Set the cookie
+    return (document.cookie = cookieString);
   }
 
   /**
@@ -56,10 +84,10 @@ class CookieService {
    * @returns An object representing the requested cookie, or `null` if no such cookie exists.
    * @static
    */
-  static getCookieByName(
+  static getCookieByName<TValue>(
     cookieNameToFind: string,
     parseCookies: boolean = false
-  ): null | CookieType {
+  ): null | CookieType<TValue> {
     this.isWindowObjectAvailable();
 
     //We get all the cookies
@@ -157,7 +185,7 @@ class CookieService {
     for (const cookie of rawArrayOfCookies) {
       let name: string = cookie.split("=")[0];
 
-      document.cookie = `${name}=0; expires=${new Date(0)}`;
+      document.cookie = `${name}=null; expires=${new Date(0)}`;
     }
   }
 
