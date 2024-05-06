@@ -15,6 +15,7 @@ jobs:
     defaults:
       run:
         working-directory: ${{ github.workspace }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -29,11 +30,14 @@ jobs:
           npm run ts-cmd
 
   publish-npm:
+    runs-on: ubuntu-latest
+
     defaults:
       run:
         working-directory: ${{ github.workspace }}
+
     needs: ts-transpilation
-    runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -44,8 +48,8 @@ jobs:
           node-version: 20
           registry-url: https://registry.npmjs.org/
 
-      - run: |
-          npm ci
+      - name: Publish library to NPM
+        run: |
           npm publish --access=public
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
