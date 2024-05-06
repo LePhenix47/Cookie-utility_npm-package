@@ -1,6 +1,6 @@
 {
   "name": "@lephenix47/cookies-utility",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "Manage browser cookies in a simple manner",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
