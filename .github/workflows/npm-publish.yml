@@ -25,7 +25,8 @@ jobs:
         with:
           node-version: 20
 
-      - run: |
+      - name: Install dependencies and transpile TypeScript
+        run: |
           npm ci
           npm run ts-bash
 
@@ -36,7 +37,7 @@ jobs:
       run:
         working-directory: ${{ github.workspace }}
 
-    needs: ts-transpilation
+    needs: [ts-transpilation]
 
     steps:
       - name: Checkout code
