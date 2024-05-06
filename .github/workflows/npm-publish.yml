@@ -27,7 +27,7 @@ jobs:
 
       - run: |
           npm ci
-          npm run ts-cmd
+          npm run ts-bash
 
   publish-npm:
     runs-on: ubuntu-latest
