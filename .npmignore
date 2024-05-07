@@ -29,6 +29,12 @@ test/
 examples/
 demo/
 
+# CI/CD pipeline folders
+.github/
+.gitlab/
+.bitbucket/
+.jenkins/
+
 # Must include files
 !lib/**/*.d.ts
 !lib/**/*.js
